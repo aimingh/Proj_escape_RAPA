@@ -2,13 +2,10 @@
 
 int main()
 {
-    WINDOW *w;
-	w = initscr();		
-    curs_set(0);    //invisible cursor
-    //************start main************
-	printw("Hello Ncurse !!!");	
-	getch();    //wait keyboard
-    //************end main************
+	initscr();		
+    curs_set(0);
+	printw("Hello Ncurses!!!");	
+	getch();
 	endwin();
 	return 0;
 }
