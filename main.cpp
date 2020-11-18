@@ -3,7 +3,7 @@
 int main()
 {
 	initscr();		
-    curs_set(0);
+	curs_set(0);
 	printw("Hello Ncurses!!!");	
 	getch();
 	endwin();
