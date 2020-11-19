@@ -2,7 +2,7 @@ TARGET = main
 OBJS = main.o game.o functions.o
 
 CC = c++
-CFLAGS = -c -W -Wall -Wno-write-strings
+CFLAGS = -c -g -W -Wall -Wno-write-strings
 LD = c++
 LDFLAGS = -o $(TARGET)
 LIBS = -lcurses
