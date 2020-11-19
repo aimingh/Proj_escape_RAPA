@@ -1,8 +1,8 @@
 TARGET = main
-OBJS = main.o memory.o
+OBJS = main.o Array.o Draw.o Game.o
 
 CC = c++
-CFLAGS = -c -W -Wall
+CFLAGS = -c -W -Wall -Wno-write-strings
 LD = c++
 LDFLAGS = -o $(TARGET)
 LIBS = -lcurses
