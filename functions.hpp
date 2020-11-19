@@ -2,6 +2,7 @@
 int is_move_ok(int, int);               // check obstacle to direction of moving
 struct Player move2direction(int, struct Player);                    // move to direction
 struct Player gravityOfPlayer(int, struct Player);  // automatically down
+struct Player jumppingOfPlayer(int, struct Player);
 struct obj_RAPA moveObj(int, struct obj_RAPA);  // move to left enemy or obstacle
 
 void flow_map_bg(char**, int, int);

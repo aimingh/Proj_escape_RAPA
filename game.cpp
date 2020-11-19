@@ -55,6 +55,7 @@ void map_init(char **map, int max_y, int max_x){
 objAll obj_init(objAll obj){
     obj.max_y = LINES; obj.max_x = COLS-70;
     obj.player.x = 1; obj.player.y = LINES - 2; // player start location
+    obj.player.jump_flag = 0;   //flag of jump
     obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = LINES - 2;    //rapa[0] start location
     return obj;
 }
@@ -78,7 +79,16 @@ objAll move(objAll obj){
     if(obj.timeCounter>10){
         obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
     }
-    obj.player = gravityOfPlayer(obj.timeCounter, obj.player);
+    if(obj.player.jump_flag==1){
+        obj.player = jumppingOfPlayer(obj.timeCounter, obj.player);
+    }else if(obj.player.floating_flag==1){
+        if(obj.timeCounter%5==5-1){
+            obj.player.jump_counter--;
+        }
+        if(obj.player.jump_counter==0){obj.player.floating_flag=0;}
+    }else{
+        obj.player = gravityOfPlayer(obj.timeCounter, obj.player);
+    }
     return obj;
 }
 
@@ -107,7 +117,7 @@ int gameMenu(){
     while((ch != 10)){
         for(int i=0; i<15; i++){
             for (int j=0; j<110; j++){
-                mvaddch(i,j,menu_map[i][j] | A_REVERSE);
+                mvaddch(i,j,menu_map[i][j]);
             }
         }
         mvaddstr(sel,70,">>");

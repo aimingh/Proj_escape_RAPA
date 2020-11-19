@@ -17,7 +17,9 @@ int is_move_ok(int y, int x){
 struct Player move2direction(int ch, struct Player player){
     switch (ch)    {
         case KEY_UP:
-            if (is_move_ok(player.y - player.shape_size_y - 6,player.x)){player.y = player.y - 5;}; break;
+            // if (is_move_ok(player.y - player.shape_size_y - 6,player.x)){player.y = player.y - 5;}; 
+            player.jump_flag = 1; player.jump_counter=player.jump_hight;  //jump flag on
+            break;
         case KEY_DOWN:
             if (is_move_ok(player.y + 1,player.x)){player.y = player.y + 1;}; break;
         case KEY_LEFT:
@@ -31,16 +33,31 @@ struct Player move2direction(int ch, struct Player player){
 // 중력 (자동적으로 아래로 이동)
 // 지상이 아래이기 때문에 점프같은 액션으로 위로 갈 경우 아래로 자연적으로 움직임 필요
 struct Player gravityOfPlayer(int counter, struct Player player){
-    int maxtime = 10;
+    int maxtime = 5;
     if(counter%maxtime==maxtime-1){
         if (is_move_ok(player.y + 1,player.x)){player.y = player.y + 1;}
     }
     return player;
 }
 
+// 점프 (jump flag가 1일 때 위로 이동)
+struct Player jumppingOfPlayer(int counter, struct Player player){
+    int maxtime = 5;
+    if(counter%maxtime==maxtime-1){
+        if (is_move_ok(player.y - 1,player.x)){player.y = player.y - 1;}
+        player.jump_counter--;
+    }
+    if(player.jump_counter<=0){
+        player.jump_flag=0;
+        player.floating_flag=1;
+        player.jump_counter=player.jump_time;
+    }
+    return player;
+}
+
 // 장애물 등의 오브젝트가 자연적으로 왼쪽으로 이동
 struct obj_RAPA moveObj(int counter, struct obj_RAPA rapa){
-    int maxtime = 10;
+    int maxtime = 3;
     if(counter%maxtime==maxtime-1){
         rapa.x = rapa.x - 1;
     }

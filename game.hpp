@@ -3,7 +3,10 @@
 // player에 대한 structure
 struct Player{
     int x, y, life; // current location and survival life
+    int jump_flag, floating_flag, jump_counter; // 점프 플래그, 체공 플레그, 점프카운터
+    static const int jump_hight = 5, jump_time = 3; // 점프 높이, 점프시 최고점 체공 시간
     static const int shape_size_y = 3, shape_size_x = 11;
+
     void appear(const int &move_y, const int &move_x){  // 플레이어 출력
         mvaddstr(move_y-this->shape_size_y+1, move_x," --------- ");    //Tayo bus
         mvaddstr(move_y-this->shape_size_y+2, move_x,"|      |OO|");
@@ -28,7 +31,7 @@ struct obj_RAPA{
 struct objAll{
     Player player;
     obj_RAPA rapa[3];
-    int max_y = LINES, max_x = COLS-70, timeCounter=0, ch='y';
+    int max_y, max_x, timeCounter=0, ch='y';
 };
 
 void map_init(char **, int, int);      // init map parameter
