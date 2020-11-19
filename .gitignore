@@ -1,0 +1,5 @@
+sample/*.cpp
+.vscode/*
+*.o
+main
+tmp.txt
