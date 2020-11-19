@@ -60,7 +60,10 @@ int GameStart(void)
     InitTayoObject();
     pTayoObj = GetTayoObject();
 
-    // 그리기
+    // 맵　그리기
+    Map();
+
+    // 타요　그리기
     DrawObject(pTayoObj->pShape, pTayoObj->nX, pTayoObj->nY, pTayoObj->nWidth, pTayoObj->nHeight);
 
     // 커서 숨기기
