@@ -106,11 +106,13 @@ objAll move(objAll obj){
     return obj;
 }
 
+// 게임 시작 화면 출력 및 start game, Exit 선택
 int gameMenu(){
     char **menu_map = new char*[15];
     for (int i=0; i<15; i++){
         menu_map[i] = new char[110];
     }
+    // 시작 화면 구성
     menu_map[0]  = "                    ______________________________                                                             ";
     menu_map[1]  = "__________________|                  RAPA        |       ____   ____   ____   ____   ____   ____               ";
     menu_map[2]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|      |____  |____  |      |____| |____| |____               ";
