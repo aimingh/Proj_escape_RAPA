@@ -83,7 +83,6 @@ objAll move(objAll obj){
 }
 
 int gameMenu(){
-    // char menu_map[15][110];
     char **menu_map = new char*[15];
     for (int i=0; i<15; i++){
         menu_map[i] = new char[110];
@@ -108,7 +107,7 @@ int gameMenu(){
     while((ch != 10)){
         for(int i=0; i<15; i++){
             for (int j=0; j<110; j++){
-                mvaddch(i,j,menu_map[i][j]);
+                mvaddch(i,j,menu_map[i][j] | A_BOLD);
             }
         }
         mvaddstr(sel,70,">>");
