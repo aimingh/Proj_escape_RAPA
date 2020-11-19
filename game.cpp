@@ -18,13 +18,23 @@ void game_start(){
     }
 	map_init(map, obj.max_y, obj.max_x);
 
-	while((obj.ch != 'q') && (obj.ch != 'Q')){
-        display(map, obj);
-        obj.ch = getch();
-        obj = move(obj);
-        flow_map_bg(map, obj.max_y, obj.max_x);
-        obj.timeCounter++;
+    int sel = gameMenu();
+    if(sel==12){
+        while((obj.ch != 'q') && (obj.ch != 'Q')){
+            display(map, obj);
+            obj.ch = getch();
+            obj = move(obj);
+            flow_map_bg(map, obj.max_y, obj.max_x);
+            obj.timeCounter++;
+        }
+    }else{
+        display_map(map, obj.max_y, obj.max_x);
+        string temp = "Game End!";
+        mvprintw(obj.max_y/2, obj.max_x/2-temp.size()/2, temp.c_str());
+        timeout(-1);
+        getch();
     }
+
 	endwin();
 }
 
@@ -70,4 +80,46 @@ objAll move(objAll obj){
     }
     obj.player = gravityOfPlayer(obj.timeCounter, obj.player);
     return obj;
+}
+
+int gameMenu(){
+    // char menu_map[15][110];
+    char **menu_map = new char*[15];
+    for (int i=0; i<15; i++){
+        menu_map[i] = new char[110];
+    }
+    menu_map[0]  = "                    ______________________________                                                             ";
+    menu_map[1]  = "__________________|                  RAPA        |       ____   ____   ____   ____   ____   ____               ";
+    menu_map[2]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|      |____  |____  |      |____| |____| |____               ";
+    menu_map[3]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|      |____   ____| |____  |    | |      |____               ";
+    menu_map[4]  = "XXXXXXXXXXXXXXXXXX|          |                   |                                                             ";
+    menu_map[5]  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|  _________      ________         ________     ________      ";
+    menu_map[6]  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| |   _____  \\   |  ____  \\      |   ____  \\   |  ____  \\     ";
+    menu_map[7]  = "-------------------------------------------------| |  |     |  |  |  |   \\  \\     |  |____|  |  |  |   \\  \\    ";
+    menu_map[8]  = "     |          |                      |         | |   -----  /   |  |____\\  \\    |  _______/   |  |____\\  \\   ";
+    menu_map[9]  = "            |                      |             | |   _____  \\   |   _____   \\   |  |          |   _____   \\  ";
+    menu_map[10] = "            |                      |             | |__|     \\__\\  |__|      \\__\\  |__|          |__|      \\__\\ ";
+    menu_map[11] = "                                ......------|    |                                                             ";
+    menu_map[12] = "              ......------``````            |    |                       Game Start                            ";
+    menu_map[13] = "..------``````                              |    |                          Exit                               ";
+    menu_map[14] = "                                                                                                               ";
+    int ch = KEY_UP;
+    int sel = 12;
+    while((ch != 10)){
+        for(int i=0; i<15; i++){
+            for (int j=0; j<110; j++){
+                mvaddch(i,j,menu_map[i][j]);
+            }
+        }
+        mvaddstr(sel,70,">>");
+        ch = getch();
+
+        switch (ch){
+            case KEY_UP:
+                sel = 12; break;
+            case KEY_DOWN:
+                sel = 13; break;
+        }
+    }
+    return sel;
 }

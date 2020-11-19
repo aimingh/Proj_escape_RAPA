@@ -2,7 +2,7 @@
 
 // player에 대한 structure
 struct Player{
-    int x, y, life = 3; // current location and survival life
+    int x, y, life; // current location and survival life
     static const int shape_size_y = 3, shape_size_x = 11;
     void appear(const int &move_y, const int &move_x){  // 플레이어 출력
         mvaddstr(move_y-this->shape_size_y+1, move_x," --------- ");    //Tayo bus
@@ -14,7 +14,7 @@ struct Player{
 // 장애물 또는 적에 대한 structure
 // 회피하는 런닝 게임이기 때문에 player와 달리 obj_RAPA에서는 life가 없다.
 struct obj_RAPA{
-    int x=COLS - 1, y = LINES - 1; // current location and survival life
+    int x, y; // current location and survival life
     static const int shape_size_y = 3, shape_size_x = 10;
     void appear(const int &move_y, const int &move_x){
         mvaddstr(move_y-this->shape_size_y+1, move_x," -------- ");    // enemy python
@@ -37,3 +37,4 @@ void game_start();  // main game start
 void display(char **, objAll ); // display for game, ex) information, object, player etc.
 objAll move(objAll obj);  // moving about player or object
 
+int gameMenu();
