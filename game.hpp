@@ -7,7 +7,7 @@ struct Player{
     void appear(const int &move_y, const int &move_x){  // 플레이어 출력
         mvaddstr(move_y-this->shape_size_y+1, move_x," --------- ");    //Tayo bus
         mvaddstr(move_y-this->shape_size_y+2, move_x,"|      |OO|");
-        mvaddstr(move_y-this->shape_size_y+3, move_x," --@--@--- ");
+        mvaddstr(move_y-this->shape_size_y+3, move_x," -@---@--- ");
     }
 };
 

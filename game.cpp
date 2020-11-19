@@ -107,7 +107,7 @@ int gameMenu(){
     while((ch != 10)){
         for(int i=0; i<15; i++){
             for (int j=0; j<110; j++){
-                mvaddch(i,j,menu_map[i][j] | A_BOLD);
+                mvaddch(i,j,menu_map[i][j] | A_REVERSE);
             }
         }
         mvaddstr(sel,70,">>");
