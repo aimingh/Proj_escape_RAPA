@@ -9,6 +9,7 @@ LIBS = -lcurses
 
 all : $(OBJS)
 	$(LD) $(LDFLAGS) $(OBJS) $(LIBS)
+	# ./main
 
 .cpp.o:
 	$(CC) $(CFLAGS) $<
