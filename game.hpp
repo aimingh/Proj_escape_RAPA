@@ -4,12 +4,18 @@
 struct Player{
     int x, y, life; // current location and survival life
     int jump_flag, floating_flag, jump_counter; // 점프 플래그, 체공 플레그, 점프카운터
-    static const int jump_hight = 5, jump_time = 3; // 점프 높이, 점프시 최고점 체공 시간
+    static const int jump_hight = 5, jump_time = 5; // 점프 높이, 점프시 최고점 체공 시간
     static const int shape_size_y = 3, shape_size_x = 11;
-
-    void appear(const int &move_y, const int &move_x){  // 플레이어 출력
+    
+    void appear1(const int &move_y, const int &move_x){  // 플레이어 출력
         mvaddstr(move_y-this->shape_size_y+1, move_x," --------- ");    //Tayo bus
         mvaddstr(move_y-this->shape_size_y+2, move_x,"|      |OO|");
+        mvaddstr(move_y-this->shape_size_y+3, move_x," -@---@--- ");
+    }
+    int down_flag, down_counter;
+    static const int down_time = 3;
+    void appear2(const int &move_y, const int &move_x){  // 플레이어 출력
+        mvaddstr(move_y-this->shape_size_y+2, move_x,"/``````/==/");
         mvaddstr(move_y-this->shape_size_y+3, move_x," -@---@--- ");
     }
 };

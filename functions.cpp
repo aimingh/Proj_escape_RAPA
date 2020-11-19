@@ -17,11 +17,9 @@ int is_move_ok(int y, int x){
 struct Player move2direction(int ch, struct Player player){
     switch (ch)    {
         case KEY_UP:
-            // if (is_move_ok(player.y - player.shape_size_y - 6,player.x)){player.y = player.y - 5;}; 
-            player.jump_flag = 1; player.jump_counter=player.jump_hight;  //jump flag on
-            break;
+            player.jump_flag = 1; player.jump_counter=player.jump_hight; break; //jump flag on
         case KEY_DOWN:
-            if (is_move_ok(player.y + 1,player.x)){player.y = player.y + 1;}; break;
+            player.down_flag = 1; player.down_counter=player.down_time; break;
         case KEY_LEFT:
             if (is_move_ok(player.y,player.x - 1)){player.x = player.x - 1;}; break;
         case KEY_RIGHT:
