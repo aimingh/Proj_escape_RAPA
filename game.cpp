@@ -131,10 +131,17 @@ int gameMenu(){
     while((ch != 10)){
         for(int i=0; i<15; i++){
             for (int j=0; j<110; j++){
-                mvaddch(i,j,menu_map[i][j]);
+                mvaddch(LINES/2 -7 + i,COLS/2 -90 + j,menu_map[i][j]);
             }
         }
-        mvaddstr(sel,70,">>");
+        for(int i=0; i<LINES; i++){
+            for (int j=0; j<COLS-70; j++){
+                if (i==0||i==LINES-1){
+                    mvaddch(i,j,'=');
+                }
+            }
+        }
+        mvaddstr(LINES/2-7 + sel,COLS/2 -90 + 70,">>");
         ch = getch();
 
         switch (ch){
