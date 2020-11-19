@@ -1,4 +1,4 @@
-#include "functions.hpp"
+#include "common.hpp"
 
 int main(){
     game_start();
