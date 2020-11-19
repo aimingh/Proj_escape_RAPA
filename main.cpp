@@ -1,5 +1,3 @@
-#include <curses.h>
-#include <string>
 #include "functions.hpp"
 
 int main(){
