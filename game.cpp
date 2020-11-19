@@ -21,7 +21,7 @@ void game_start(){
 	while((obj.ch != 'q') && (obj.ch != 'Q')){
         display(map, obj);
         obj.ch = getch();
-        obj = action(obj);
+        obj = move(obj);
         obj.timeCounter++;
     }
 	endwin();
@@ -61,7 +61,7 @@ void display(char **map, objAll obj){
 
 // 액션에 대한 모음
 // 플레이어의 움직임이나 장애물 등의 오브젝트의 움직임 등을 통제한다.
-objAll action(objAll obj){
+objAll move(objAll obj){
     obj.player = move2direction(obj.ch, obj.player);
     if(obj.timeCounter>10){
         obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);

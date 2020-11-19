@@ -35,5 +35,5 @@ void map_init(char **, int, int);      // init map parameter
 objAll obj_init(objAll obj);    // init object parameter 
 void game_start();  // main game start
 void display(char **, objAll ); // display for game, ex) information, object, player etc.
-objAll action(objAll obj);  // moving about player or object
+objAll move(objAll obj);  // moving about player or object
 
