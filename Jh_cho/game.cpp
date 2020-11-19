@@ -46,6 +46,7 @@ objAll obj_init(objAll obj){
     obj.max_y = LINES; obj.max_x = COLS-70;
     obj.player.x = 1; obj.player.y = LINES - 2; // player start location
     obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = LINES - 2;    //rapa[0] start location
+    obj.player.f1 = 0; // flag 초기화
     return obj;
 }
 
@@ -57,7 +58,11 @@ void display(char **map, objAll obj){
         obj.rapa[0].appear(obj.rapa[0].y, obj.rapa[0].x);
         obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
     }
-    obj.player.appear(obj.player.y,obj.player.x);
+    if(obj.player.f1==0){
+        obj.player.appear(obj.player.y,obj.player.x);
+    } else{
+        obj.player.appear2(obj.player.y,obj.player.x);
+    }
     display_information(obj);
 }
 
