@@ -9,7 +9,7 @@ using namespace std;
 int is_move_ok(int y, int x){   
     int compare_ch;
     compare_ch = mvinch(y,x); // 주어진 위치 문자 return
-    return !((compare_ch=='*' || y >LINES || y<3 || x > COLS- 70 || x < 0));
+    return !((compare_ch=='*' || y >LINES-2 || y<0 || x > COLS- 70 - 8 || x < 0));  // 문자 제한, 윈도우 제한
 }
 
 // 플레이어 움직임
@@ -60,4 +60,18 @@ void display_map(char **map, int max_y, int max_x){
 void display_information(objAll obj){
     string timestring = "time: " + to_string(obj.timeCounter);  //show time
     mvaddstr(1, 1, timestring.c_str()); 
+}
+
+void flow_map_bg(char**map, int max_y, int max_x){
+    for (int j=0; j<max_x-1; j++){
+        map[2][j] = map[2][j+1];
+        map[max_y-1][j] = map[max_y-1][j+1];
+    }
+    if(map[2][max_x-2]=='-' && map[2][max_x-3]=='-'){
+        map[2][max_x-1] = '*';
+        map[max_y-1][max_x-1] = '*';
+    }else{
+        map[2][max_x-1] = '-';
+        map[max_y-1][max_x-1] = '-';
+    }
 }

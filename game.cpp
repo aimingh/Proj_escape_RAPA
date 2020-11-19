@@ -22,6 +22,7 @@ void game_start(){
         display(map, obj);
         obj.ch = getch();
         obj = move(obj);
+        flow_map_bg(map, obj.max_y, obj.max_x);
         obj.timeCounter++;
     }
 	endwin();
@@ -33,7 +34,8 @@ void map_init(char **map, int max_y, int max_x){
         for (int j=0; j<max_x; j++){
             map[i][j] = ' ';
             if(i==0 || i==max_y-1 || i==2){
-                map[i][j] = '*';
+                if(j%3==0){map[i][j] = '*';}
+                else{map[i][j] = '-';}
             }
         }
     }
