@@ -72,9 +72,11 @@ void display_map(char **map, int max_y, int max_x){
 }
 
 // 게임 정보 출력
-void display_information(objAll obj){
+void display_information(objAll obj, Player player){
     string timestring = "time: " + to_string(obj.timeCounter);  //show time
+    string lifestring = "life: " + to_string(player.life);
     mvaddstr(1, 1, timestring.c_str()); 
+    mvaddstr(1, 12, lifestring.c_str()); 
 }
 
 void flow_map_bg(char**map, int max_y, int max_x){
