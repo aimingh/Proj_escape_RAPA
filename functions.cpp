@@ -78,23 +78,24 @@ void display_information(objAll obj){
 }
 
 void flow_map_bg(char**map, int max_y, int max_x){
-    char temp=map[3][0];
+    char temp=map[0][0];
     for (int j=0; j<max_x-1; j++){
+        map[0][j] = map[0][j+1];
         map[3][j] = map[3][j+1];
         map[max_y-1][j] = map[max_y-1][j+1];
     }
 
     // map[0][max_x-1] = temp;
-    map[3][max_x-1] = temp;
-    map[max_y-1][max_x-1] = temp;
+    map[0][max_x-1] = temp;
+    // map[max_y-1][max_x-1] = temp;
 
-    // if(map[2][max_x-2]=='-' && map[2][max_x-3]=='-'){
-    //     map[2][max_x-1] = '*';
-    //     map[max_y-1][max_x-1] = '*';
-    // }else{
-    //     map[2][max_x-1] = '-';
-    //     map[max_y-1][max_x-1] = '-';
-    // }
+    if(map[3][max_x-2]=='-' && map[3][max_x-3]=='-'){
+        map[3][max_x-1] = '*';
+        map[max_y-1][max_x-1] = '*';
+    }else{
+        map[3][max_x-1] = '-';
+        map[max_y-1][max_x-1] = '-';
+    }
 }
 /*     for(int i=0; i<max_y; i++){
         for (int j=0, k =0; j<max_x; j++){
