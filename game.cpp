@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <curses.h>
 #include "common.hpp"
 using namespace std;
@@ -18,14 +19,42 @@ void game_start(){
     }
 	map_init(map, obj.max_y, obj.max_x);
 
+    //랜덤요소
+    random_device rd;
+    mt19937_64 mersenne_twister_engine(rd());
+    uniform_int_distribution<> dice(0,5);
+    uniform_int_distribution<> dice2(0,obj.max_rapa_num-1);
+    uniform_int_distribution<> dice3(0,10);
+    int random_dice, target_dice, target_height;
+
     int sel = gameMenu();
     if(sel==12){
         while((obj.ch != 'q') && (obj.ch != 'Q')){
-            display(map, obj);
-            obj.ch = getch();
-            obj = move(obj);
-            flow_map_bg(map, obj.max_y, obj.max_x);
+            display(map, obj);  //출력
+            obj.ch = getch();   //키보드 입력
+            obj = move(obj);    //이동
+            flow_map_bg(map, obj.max_y, obj.max_x); //배경움직임
+            
+            // 적 생성 임시
+            if(obj.timeCounter%10==0){  //판정 속도 제어
+                random_dice = dice(mersenne_twister_engine);    //
+                if(random_dice==0){
+                    target_dice = dice2(mersenne_twister_engine);
+                    target_height = dice3(mersenne_twister_engine);
+                    if (obj.rapa[target_dice].exist_flag==0){
+                        obj.rapa[target_dice].exist_flag=1;
+                        obj.rapa[target_dice].x = obj.max_x-obj.rapa[target_dice].shape_size_x-1; 
+                        obj.rapa[target_dice].y = obj.max_y - target_height - 2;
+                    }
+
+                }
+            }
+
             obj.timeCounter++;
+<<<<<<< HEAD
+=======
+            //생명 감소 테스트 코드
+>>>>>>> 7083b62168314da760667f43db45160fd5af4bd8
             if(obj.ch == 'm'){
                 if(obj.player.life>0){obj.player.life--;}}
                 };
@@ -54,11 +83,16 @@ void map_init(char **map, int max_y, int max_x){
 
 // 스트럭쳐로 짜여진 오브젝트나 플레이어 등을 초기화
 objAll obj_init(objAll obj){
-    obj.max_y = LINES; obj.max_x = COLS-70;
-    obj.player.x = 1; obj.player.y = LINES - 2; // player start location
+    obj.max_y = MAX_Y; obj.max_x = MAX_X;
+    obj.player.x = 1; obj.player.y = obj.max_y - 2; // player start location
     obj.player.jump_flag = 0;   //flag of jump
     obj.player.down_flag = 0;
-    obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = LINES - 2;    //rapa[0] start location
+    obj.rapa_num = 0;
+    for(int i=0;i<obj.max_rapa_num;i++){
+        obj.rapa[i].x = obj.max_x-obj.rapa[i].shape_size_x-1; 
+        obj.rapa[i].y = obj.max_y - 2;    //rapa[0] start location
+        obj.rapa[i].exist_flag = 0;
+    }
     obj.player.life = 3;
     return obj;
 }
@@ -67,10 +101,11 @@ objAll obj_init(objAll obj){
 // 플레이어나 적, 그리고 게임 관련 정보를 출력
 void display(char **map, objAll obj){
     display_map(map, obj.max_y, obj.max_x);
-    if(obj.timeCounter>10){   //test generate obj.rapa[0]
-        obj.rapa[0].appear(obj.rapa[0].y, obj.rapa[0].x);
-        obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
-    }
+    for(int i=0;i<obj.max_rapa_num;i++){
+        if(obj.rapa[i].exist_flag==1){
+            obj.rapa[i].appear(obj.rapa[i].y, obj.rapa[i].x);
+        }
+    } 
     if(obj.player.down_flag==0){
         obj.player.appear1(obj.player.y,obj.player.x);
     }else{
@@ -83,9 +118,11 @@ void display(char **map, objAll obj){
 // 플레이어의 움직임이나 장애물 등의 오브젝트의 움직임 등을 통제한다.
 objAll move(objAll obj){
     obj.player = move2direction(obj.ch, obj.player);
-    if(obj.timeCounter>10){
-        obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
-    }
+    for(int i=0;i<obj.max_rapa_num;i++){
+        if(obj.rapa[i].exist_flag==1){
+            obj.rapa[i] = moveObj(obj.timeCounter, obj.rapa[i]);
+        }
+    } 
 
     if(obj.player.jump_flag==1){
         obj.player = jumppingOfPlayer(obj.timeCounter, obj.player);
@@ -132,20 +169,22 @@ int gameMenu(){
     menu_map[14] = "                                                                                                               ";
     int ch = KEY_UP;
     int sel = 12;
+    int max_y = MAX_Y;
+    int max_x = MAX_X;
     while((ch != 10)){
         for(int i=0; i<15; i++){
             for (int j=0; j<110; j++){
-                mvaddch(LINES/2 -7 + i,COLS/2 -90 + j,menu_map[i][j]);
+                mvaddch(max_y/2 -7 + i,max_x/2 -55 + j,menu_map[i][j]);
             }
         }
-        for(int i=0; i<LINES; i++){
-            for (int j=0; j<COLS-70; j++){
-                if (i==0||i==LINES-1){
+        for(int i=0; i<max_y; i++){
+            for (int j=0; j<max_x; j++){
+                if (i==0||i==max_y-1){
                     mvaddch(i,j,'=');
                 }
             }
         }
-        mvaddstr(LINES/2-7 + sel,COLS/2 -90 + 70,">>");
+        mvaddstr(max_y/2-7 + sel,max_x/2 -55 + 70,">>");
         ch = getch();
 
         switch (ch){

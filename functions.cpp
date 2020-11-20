@@ -8,8 +8,10 @@ using namespace std;
 // 볃에 대한 충돌만 인정되므로 적 오브젝트에 대한 충돌 판정 필요
 int is_move_ok(int y, int x){   
     int compare_ch;
+    int max_y = MAX_Y;
+    int max_x = MAX_X;
     compare_ch = mvinch(y,x); // 주어진 위치 문자 return
-    return !((compare_ch=='*' || y >LINES-2 || y<0 || x > COLS- 70 - 8 || x < 0));  // 문자 제한, 윈도우 제한
+    return !((compare_ch=='*' || y >max_y-2 || y<5 || x > max_x - 8 || x < 0));  // 문자 제한, 윈도우 제한
 }
 
 // 플레이어 움직임
@@ -58,6 +60,9 @@ struct obj_RAPA moveObj(int counter, struct obj_RAPA rapa){
     int maxtime = 3;
     if(counter%maxtime==maxtime-1){
         rapa.x = rapa.x - 1;
+    }
+    if(rapa.x<0){       // 맵 끝에 가면 exsist_flag off object 소멸
+        rapa.exist_flag = 0;
     }
     return rapa;
 }
