@@ -78,14 +78,14 @@ void display_information(objAll obj){
 }
 
 void flow_map_bg(char**map, int max_y, int max_x){
-    char temp=map[2][0];
+    char temp=map[3][0];
     for (int j=0; j<max_x-1; j++){
-        map[2][j] = map[2][j+1];
+        map[3][j] = map[3][j+1];
         map[max_y-1][j] = map[max_y-1][j+1];
     }
 
     // map[0][max_x-1] = temp;
-    map[2][max_x-1] = temp;
+    map[3][max_x-1] = temp;
     map[max_y-1][max_x-1] = temp;
 
     // if(map[2][max_x-2]=='-' && map[2][max_x-3]=='-'){
