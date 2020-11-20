@@ -26,36 +26,36 @@ void game_start(){
     uniform_int_distribution<> dice2(0,obj.max_rapa_num-1);
     uniform_int_distribution<> dice3(0,10);
     int random_dice, target_dice, target_height;
-
-    int sel = gameMenu();
-    if(sel==12){
-        while((obj.ch != 'q') && (obj.ch != 'Q')){
-            display(map, obj);  //출력
-            obj.ch = getch();   //키보드 입력
-            obj = move(obj);    //이동
-            flow_map_bg(map, obj.max_y, obj.max_x); //배경움직임
-            
-            // 적 생성 임시
-            if(obj.timeCounter%10==0){  //판정 속도 제어
-                random_dice = dice(mersenne_twister_engine);    //
-                if(random_dice==0){
-                    target_dice = dice2(mersenne_twister_engine);
-                    target_height = dice3(mersenne_twister_engine);
-                    obj = genRAPA(obj, target_dice, target_height);
+    while(1){
+        obj = obj_init(obj);
+        map_init(map, obj.max_y, obj.max_x);
+        int sel = gameMenu();
+        if(sel==12){
+            while((obj.ch != 'q') && (obj.ch != 'Q') && (obj.player.life!=0)){
+                display(map, obj);  //출력
+                obj.ch = getch();   //키보드 입력
+                obj = move(obj);    //이동
+                flow_map_bg(map, obj.max_y, obj.max_x); //배경움직임
+                
+                // 적 생성 임시
+                if(obj.timeCounter%10==0){  //판정 속도 제어
+                    random_dice = dice(mersenne_twister_engine);    //
+                    if(random_dice==0){
+                        target_dice = dice2(mersenne_twister_engine);
+                        target_height = dice3(mersenne_twister_engine);
+                        obj = genRAPA(obj, target_dice, target_height);
+                    }
                 }
-            }
-            obj.timeCounter++;
-
-            //생명 감소 테스트 코드
-            // if(obj.ch == 'm'){
-            //     if(obj.player.life>0){obj.player.life--;}}
-        };
-    }else{
-        display_map(map, obj.max_y, obj.max_x);
-        string temp = "Game End!";
-        mvprintw(obj.max_y/2, obj.max_x/2-temp.size()/2, temp.c_str());
-        timeout(-1);
-        getch();
+                obj.timeCounter++;
+            };
+        }else{
+            display_map(map, obj.max_y, obj.max_x);
+            string temp = "Thanks for playing!";
+            mvprintw(obj.max_y/2, obj.max_x/2-temp.size()/2, temp.c_str());
+            timeout(-1);
+            getch();
+            break;
+        }
     }
 	endwin();
 }
@@ -75,6 +75,7 @@ void map_init(char **map, int max_y, int max_x){
 
 // 스트럭쳐로 짜여진 오브젝트나 플레이어 등을 초기화
 objAll obj_init(objAll obj){
+    obj.ch='y';
     obj.max_y = MAX_Y; obj.max_x = MAX_X;
     obj.player.x = 1; obj.player.y = obj.max_y - 2; // player start location
     obj.player.jump_flag = 0;   //flag of jump
@@ -197,3 +198,55 @@ int gameMenu(){
     }
     return sel;
 }
+/*
+int gameOver(){
+    char **menu_map = new char*[15];
+    for (int i=0; i<15; i++){
+        menu_map[i] = new char[110];
+    }
+    // 시작 화면 구성
+    menu_map[0]  = "                    ______________________________                                                             ";
+    menu_map[1]  = "__________________|                  RAPA        |     ____                                                        ";
+    menu_map[2]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|     ____                                                      ";
+    menu_map[3]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|                                                             ";
+    menu_map[4]  = "XXXXXXXXXXXXXXXXXX|          |                   |         /                                                    ";
+    menu_map[5]  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                                                             ";
+    menu_map[6]  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                                                             ";
+    menu_map[7]  = "-------------------------------------------------|                                                             ";
+    menu_map[8]  = "     |          |                      |         |                                                             ";
+    menu_map[9]  = "            |                      |             |                                                             ";
+    menu_map[10] = "            |                      |             |                                                             ";
+    menu_map[11] = "                                ......------|    |                                                             ";
+    menu_map[12] = "              ......------``````            |    |                       Game Start                            ";
+    menu_map[13] = "..------``````                              |    |                          Exit                               ";
+    menu_map[14] = "                                                                                                               ";
+    int ch = KEY_UP;
+    int sel = 12;
+    int max_y = MAX_Y;
+    int max_x = MAX_X;
+    while((ch != 10)){
+        for(int i=0; i<15; i++){
+            for (int j=0; j<110; j++){
+                mvaddch(max_y/2 -7 + i,max_x/2 -55 + j,menu_map[i][j]);
+            }
+        }
+        for(int i=0; i<max_y; i++){
+            for (int j=0; j<max_x; j++){
+                if (i==0||i==max_y-1){
+                    mvaddch(i,j,'=');
+                }
+            }
+        }
+        mvaddstr(max_y/2-7 + sel,max_x/2 -55 + 70,">>");
+        ch = getch();
+
+        switch (ch){
+            case KEY_UP:
+                sel = 12; break;
+            case KEY_DOWN:
+                sel = 13; break;
+        }
+    }
+    return sel;
+}
+*/
