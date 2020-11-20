@@ -26,7 +26,9 @@ void game_start(){
             obj = move(obj);
             flow_map_bg(map, obj.max_y, obj.max_x);
             obj.timeCounter++;
-        }
+            if(obj.ch == 'm'){
+                if(obj.player.life>0){obj.player.life--;}}
+                };
     }else{
         display_map(map, obj.max_y, obj.max_x);
         string temp = "Game End!";
@@ -34,7 +36,6 @@ void game_start(){
         timeout(-1);
         getch();
     }
-
 	endwin();
 }
 

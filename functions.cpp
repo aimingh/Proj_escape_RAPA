@@ -80,9 +80,11 @@ void display_information(objAll obj){
     for(i =0; i<obj.player.life; i++){
     lifestring += "O";                                        // when changing "O" to heart
     }
-    
+
+
+
     mvaddstr(1, 1, timestring.c_str()); 
-    mvaddstr(1, 12, lifestring.c_str()); 
+    mvaddstr(1, 12, lifestring.c_str());
 }
 
 void flow_map_bg(char**map, int max_y, int max_x){
