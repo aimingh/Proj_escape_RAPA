@@ -72,9 +72,15 @@ void display_map(char **map, int max_y, int max_x){
 }
 
 // 게임 정보 출력
-void display_information(objAll obj, Player player){
+void display_information(objAll obj){
     string timestring = "time: " + to_string(obj.timeCounter);  //show time
-    string lifestring = "life: " + to_string(player.life);
+    string lifestring = "life: ";
+    int i = 0;
+    for(i =0; i<obj.player.life; i++){
+    lifestring += "O";
+    }
+    // lifestring += to_string(obj.player.life);
+
     mvaddstr(1, 1, timestring.c_str()); 
     mvaddstr(1, 12, lifestring.c_str()); 
 }

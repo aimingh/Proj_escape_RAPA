@@ -58,6 +58,7 @@ objAll obj_init(objAll obj){
     obj.player.jump_flag = 0;   //flag of jump
     obj.player.down_flag = 0;
     obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = LINES - 2;    //rapa[0] start location
+    obj.player.life = 3;
     return obj;
 }
 
