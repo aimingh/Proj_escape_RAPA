@@ -75,12 +75,12 @@ void display_map(char **map, int max_y, int max_x){
 void display_information(objAll obj){
     string timestring = "TIME: " + to_string(obj.timeCounter);  //show time
     string lifestring = "/  LIFE: ";
+
     int i = 0;
     for(i =0; i<obj.player.life; i++){
-    lifestring += "O";
+    lifestring += "O";                                        // when changing "O" to heart
     }
-    // lifestring += to_string(obj.player.life);
-
+    
     mvaddstr(1, 1, timestring.c_str()); 
     mvaddstr(1, 12, lifestring.c_str()); 
 }
