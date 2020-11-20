@@ -67,6 +67,16 @@ struct obj_RAPA moveObj(int counter, struct obj_RAPA rapa){
     return rapa;
 }
 
+//적 생성 및 초기화
+struct objAll genRAPA(struct objAll obj, int target_dice, int target_height){
+    if (obj.rapa[target_dice].exist_flag==0){
+        obj.rapa[target_dice].exist_flag=1;
+        obj.rapa[target_dice].x = obj.max_x-obj.rapa[target_dice].shape_size_x-1; 
+        obj.rapa[target_dice].y = obj.max_y - target_height - 2;
+    }
+    return obj;
+}
+
 // 맵 출력
 void display_map(char **map, int max_y, int max_x){
     for(int i=0; i<max_y; i++){

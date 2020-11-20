@@ -4,7 +4,7 @@ struct Player move2direction(int, struct Player);                    // move to 
 struct Player gravityOfPlayer(int, struct Player);  // automatically down
 struct Player jumppingOfPlayer(int, struct Player);
 struct obj_RAPA moveObj(int, struct obj_RAPA);  // move to left enemy or obstacle
-
+struct objAll genRAPA(struct objAll, int, int);
 void flow_map_bg(char**, int, int);
 
 // 출력에 대한 함수

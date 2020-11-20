@@ -41,16 +41,11 @@ void game_start(){
                 if(random_dice==0){
                     target_dice = dice2(mersenne_twister_engine);
                     target_height = dice3(mersenne_twister_engine);
-                    if (obj.rapa[target_dice].exist_flag==0){
-                        obj.rapa[target_dice].exist_flag=1;
-                        obj.rapa[target_dice].x = obj.max_x-obj.rapa[target_dice].shape_size_x-1; 
-                        obj.rapa[target_dice].y = obj.max_y - target_height - 2;
-                    }
-
+                    obj = genRAPA(obj, target_dice, target_height);
                 }
             }
-
             obj.timeCounter++;
+            
             //생명 감소 테스트 코드
             if(obj.ch == 'm'){
                 if(obj.player.life>0){obj.player.life--;}}
