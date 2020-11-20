@@ -90,7 +90,7 @@ void display_information(objAll obj){
     mvaddstr(1, 12, lifestring.c_str());
 
     // 아이템　정보출력
-    string Bombstring = "BOMB: Press 'n'";
+    string Bombstring = "BOMB: Press 'b'";
     mvaddstr(1, obj.max_x-Bombstring.size()-1, Bombstring.c_str());
 }
 
