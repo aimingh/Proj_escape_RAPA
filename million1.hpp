@@ -1,12 +1,11 @@
-#include <curses.h>
+
+struct obj_RAPA_FloStr1 moveObj2(int, struct obj_RAPA_FloStr1);
 
 struct obj_RAPA_FloStr1{
-    int x, y; // current location and survival life
+    int x, y;
     static const int shape_size_y = 1, shape_size_x = 17;
     void appear4(const int &move_y, const int &move_x){
         mvaddstr(move_y-this->shape_size_y+1, move_x, "1. RTC control system (7.13-8.28) ");
-        // mvaddstr(move_y-this->shape_size_y+2, move_x,"| Python |");
-        // mvaddstr(move_y-this->shape_size_y+3, move_x," -------- ");
     }
 };
 

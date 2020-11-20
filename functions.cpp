@@ -90,3 +90,53 @@ void flow_map_bg(char**map, int max_y, int max_x){
         map[max_y-1][max_x-1] = '-';
     }
 }
+/*     for(int i=0; i<max_y; i++){
+        for (int j=0, k =0; j<max_x; j++){
+            map[i][j] = ' ';
+            // if(i==0 || i==max_y-1 || i==2){
+            //     if(j%3==0){map[i][j] = '*';}
+            //     else{map[i][j] = '-';}
+
+            // 1. RTC control system (7.13-8.28)
+            k = (j+1)%33;
+            switch (k)
+            {
+            case 1: map[i][j] = '1'; break;
+            case 2: map[i][j] = '.'; break;
+            case 3: map[i][j] = '+'; break;
+            case 4: map[i][j] = 'R'; break;
+            case 5: map[i][j] = 'T'; break;
+            case 6: map[i][j] = 'C'; break;
+            case 7: map[i][j] = 'c'; break;
+            case 8: map[i][j] = 'o'; break;
+            case 9: map[i][j] = 'n'; break;
+            case 10: map[i][j] = 't'; break;
+            case 11: map[i][j] = 'r'; break;
+            case 12: map[i][j] = 'o'; break;
+            case 13: map[i][j] = 'l'; break;
+            case 14: map[i][j] = '+'; break;
+            case 15: map[i][j] = 's'; break;
+            case 16: map[i][j] = 'y'; break;
+            case 17: map[i][j] = 's'; break;
+            case 18: map[i][j] = 't'; break;
+            case 19: map[i][j] = 'e'; break;
+            case 20: map[i][j] = 'm'; break;
+            case 21: map[i][j] = '+'; break;
+            case 22: map[i][j] = '('; break;
+            case 23: map[i][j] = '7'; break;
+            case 24: map[i][j] = '.'; break;
+            case 25: map[i][j] = '1'; break;
+            case 26: map[i][j] = '3'; break;
+            case 27: map[i][j] = '-'; break;
+            case 28: map[i][j] = '8'; break;
+            case 29: map[i][j] = '.'; break;
+            case 30: map[i][j] = '2'; break;
+            case 31: map[i][j] = '8'; break;
+            case 32: map[i][j] = ')'; break;
+            default:
+                break;
+            // }
+        }
+    }
+}
+} */

@@ -1,5 +1,5 @@
 TARGET = main
-OBJS = main.o game.o functions.o
+OBJS = main.o game.o functions.o 
 
 CC = c++
 CFLAGS = -c -g -W -Wall -Wno-write-strings
