@@ -3,7 +3,7 @@ sample/*
 main
 *.o
 tmp.txt
-/ES_oh
-/Jh_cho
-/reference
+ES_oh/*
+Jh_cho/*
+reference/*
 
