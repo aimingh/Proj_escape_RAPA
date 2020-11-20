@@ -2,8 +2,6 @@
 ### Presented by Team Tayo Games
 <img src='static/startmenu.png'>
 
-# Enviroments
-![Contributors]
 # Installation
 Dependency
 ```
