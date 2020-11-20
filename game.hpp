@@ -40,7 +40,7 @@ struct obj_RAPA{
 // 맵을 제외한 대부분을 들고 이동한다.
 struct objAll{
     Player player;
-    static const int max_rapa_num = 3;  // rapa 최대 출현 숫자
+    static const int max_rapa_num = 10;  // rapa 최대 출현 숫자
     int rapa_num;                       // 현재 출현중인 rapa의 숫자
     obj_RAPA rapa[max_rapa_num];
     int max_y, max_x, timeCounter=0, ch='y';

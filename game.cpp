@@ -11,13 +11,6 @@ void game_start(){
     timeout(30);
 	keypad(stdscr, TRUE);
 
-    //랜덤요소
-    random_device rd;
-    mt19937_64 mersenne_twister_engine(rd());
-    uniform_int_distribution<> dice(0,5);
-    uniform_int_distribution<> dice2(0,2);
-    int random_dice;
-
 	objAll obj; //declare obj carrier
     obj = obj_init(obj);
 	char **map = new char*[obj.max_y];  // define map
@@ -25,6 +18,14 @@ void game_start(){
         map[i] = new char[obj.max_x];
     }
 	map_init(map, obj.max_y, obj.max_x);
+
+    //랜덤요소
+    random_device rd;
+    mt19937_64 mersenne_twister_engine(rd());
+    uniform_int_distribution<> dice(0,5);
+    uniform_int_distribution<> dice2(0,obj.max_rapa_num-1);
+    uniform_int_distribution<> dice3(0,10);
+    int random_dice, target_dice, target_height;
 
     int sel = gameMenu();
     if(sel==12){
@@ -38,32 +39,14 @@ void game_start(){
             if(obj.timeCounter%10==0){  //판정 속도 제어
                 random_dice = dice(mersenne_twister_engine);    //
                 if(random_dice==0){
-                    switch (dice2(mersenne_twister_engine))
-                    {
-                    case 0:
-                        if (obj.rapa[0].exist_flag==0){
-                            obj.rapa[0].exist_flag=1;
-                            obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; 
-                            obj.rapa[0].y = obj.max_y - 2;
-                        }
-                        break;
-                    case 1:
-                        if (obj.rapa[1].exist_flag==0){
-                            obj.rapa[1].exist_flag=1;
-                            obj.rapa[1].x = obj.max_x-obj.rapa[1].shape_size_x-1; 
-                            obj.rapa[1].y = obj.max_y - 6;
-                        }
-                        break;
-                    case 2:
-                        if (obj.rapa[2].exist_flag==0){
-                            obj.rapa[2].exist_flag=1;
-                            obj.rapa[2].x = obj.max_x-obj.rapa[2].shape_size_x-1; 
-                            obj.rapa[2].y = obj.max_y - 10;
-                        }
-                        break;
-                    default:
-                        break;
+                    target_dice = dice2(mersenne_twister_engine);
+                    target_height = dice3(mersenne_twister_engine);
+                    if (obj.rapa[target_dice].exist_flag==0){
+                        obj.rapa[target_dice].exist_flag=1;
+                        obj.rapa[target_dice].x = obj.max_x-obj.rapa[target_dice].shape_size_x-1; 
+                        obj.rapa[target_dice].y = obj.max_y - target_height - 2;
                     }
+
                 }
             }
 
