@@ -47,9 +47,9 @@ void game_start(){
             obj.timeCounter++;
 
             //생명 감소 테스트 코드
-            if(obj.ch == 'm'){
-                if(obj.player.life>0){obj.player.life--;}}
-                };
+            // if(obj.ch == 'm'){
+            //     if(obj.player.life>0){obj.player.life--;}}
+        };
     }else{
         display_map(map, obj.max_y, obj.max_x);
         string temp = "Game End!";
@@ -138,7 +138,7 @@ objAll move(objAll obj){
     }
     //충돌후무적off
     if(obj.player.collap_flag==1){
-        if(obj.timeCounter%5==5-1){
+        if(obj.timeCounter%10==9){
             obj.player.collap_counter--;
         }
         if(obj.player.collap_counter==0){obj.player.collap_flag=0;}

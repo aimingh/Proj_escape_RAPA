@@ -19,12 +19,14 @@ int is_move_ok(int y, int x){
 struct objAll is_collap(struct objAll obj){
     int x1 = obj.player.x, x2 = obj.player.x+obj.player.shape_size_x;
     int y1 = obj.player.y, y2 = obj.player.y-obj.player.shape_size_y;
-    for(int i=0; i<obj.max_rapa_num;i++){
-        if ((x1<obj.rapa[i].x&&obj.rapa[i].x<x2)||((x1<obj.rapa[i].x+obj.rapa[i].shape_size_x&&obj.rapa[i].x+obj.rapa[i].shape_size_x<x2))){
-            if ((y2<obj.rapa[i].y&&obj.rapa[i].y<y1)||(y2<obj.rapa[i].y-obj.rapa[i].shape_size_y&&obj.rapa[i].y-obj.rapa[i].shape_size_y<y1)){
-                // obj.player.life--; 
-                obj.player.collap_flag=1;
-                obj.player.collap_counter=obj.player.collap_time;
+    if(obj.player.collap_flag==0){
+        for(int i=0; i<obj.max_rapa_num;i++){
+            if ((x1<obj.rapa[i].x&&obj.rapa[i].x<x2)||((x1<obj.rapa[i].x+obj.rapa[i].shape_size_x&&obj.rapa[i].x+obj.rapa[i].shape_size_x<x2))){
+                if ((y2<obj.rapa[i].y&&obj.rapa[i].y<y1)||(y2<obj.rapa[i].y-obj.rapa[i].shape_size_y&&obj.rapa[i].y-obj.rapa[i].shape_size_y<y1)){
+                    obj.player.life--; 
+                    obj.player.collap_flag=1;
+                    obj.player.collap_counter=obj.player.collap_time;
+                }
             }
         }
     }
