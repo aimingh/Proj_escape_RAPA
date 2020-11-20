@@ -27,6 +27,7 @@ struct Player{
 // 회피하는 런닝 게임이기 때문에 player와 달리 obj_RAPA에서는 life가 없다.
 struct obj_RAPA{
     int x, y; // current location and survival life
+    int exist_flag;
     static const int shape_size_y = 3, shape_size_x = 10;
     void appear(const int &move_y, const int &move_x){
         mvaddstr(move_y-this->shape_size_y+1, move_x," -------- ");    // enemy python
@@ -39,7 +40,9 @@ struct obj_RAPA{
 // 맵을 제외한 대부분을 들고 이동한다.
 struct objAll{
     Player player;
-    obj_RAPA rapa[3];
+    static const int max_rapa_num = 3;  // rapa 최대 출현 숫자
+    int rapa_num;                       // 현재 출현중인 rapa의 숫자
+    obj_RAPA rapa[max_rapa_num];
     int max_y, max_x, timeCounter=0, ch='y';
 };
 
