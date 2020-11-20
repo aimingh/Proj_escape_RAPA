@@ -14,7 +14,7 @@ https://github.com/blackcoke/Proj_escape_RAPA.git
 make
 ```
 
-# Excution
+# Execution
 ```
 ./main
 ```
