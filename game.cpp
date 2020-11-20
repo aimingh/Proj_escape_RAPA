@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <curses.h>
 #include "common.hpp"
 using namespace std;
@@ -9,6 +10,12 @@ void game_start(){
     curs_set(0);    //invisible cursor
     timeout(30);
 	keypad(stdscr, TRUE);
+
+    random_device rd;
+    mt19937_64 mersenne_twister_engine(rd());
+    uniform_int_distribution<> dice(1,60);
+    uniform_int_distribution<> dice2(1,4);
+    int random_dice;
 
 	objAll obj; //declare obj carrier
     obj = obj_init(obj);
@@ -57,7 +64,12 @@ objAll obj_init(objAll obj){
     obj.player.x = 1; obj.player.y = obj.max_y - 2; // player start location
     obj.player.jump_flag = 0;   //flag of jump
     obj.player.down_flag = 0;
-    obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = obj.max_y - 2;    //rapa[0] start location
+    obj.rapa_num = 0;
+    for(int i=0;i<obj.max_rapa_num;i++){
+        obj.rapa[i].x = obj.max_x-obj.rapa[i].shape_size_x-1; 
+        obj.rapa[i].y = obj.max_y - 2;    //rapa[0] start location
+        obj.rapa[i].exist_flag = 0;
+    }
     return obj;
 }
 
@@ -65,10 +77,12 @@ objAll obj_init(objAll obj){
 // 플레이어나 적, 그리고 게임 관련 정보를 출력
 void display(char **map, objAll obj){
     display_map(map, obj.max_y, obj.max_x);
-    if(obj.timeCounter>10){   //test generate obj.rapa[0]
-        obj.rapa[0].appear(obj.rapa[0].y, obj.rapa[0].x);
-        obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
-    }
+    for(int i=0;i<obj.max_rapa_num;i++){
+        if(obj.rapa[i].exist_flag==1){
+            // obj.rapa[i] = moveObj(obj.timeCounter, obj.rapa[i]);
+            obj.rapa[i].appear(obj.rapa[i].y, obj.rapa[i].x);
+        }
+    } 
     if(obj.player.down_flag==0){
         obj.player.appear1(obj.player.y,obj.player.x);
     }else{
@@ -81,9 +95,14 @@ void display(char **map, objAll obj){
 // 플레이어의 움직임이나 장애물 등의 오브젝트의 움직임 등을 통제한다.
 objAll move(objAll obj){
     obj.player = move2direction(obj.ch, obj.player);
-    if(obj.timeCounter>10){
-        obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
-    }
+    // if(obj.timeCounter>10){
+    //     obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
+    // }
+    for(int i=0;i<obj.max_rapa_num;i++){
+        if(obj.rapa[i].exist_flag==1){
+            obj.rapa[i] = moveObj(obj.timeCounter, obj.rapa[i]);
+        }
+    } 
 
     if(obj.player.jump_flag==1){
         obj.player = jumppingOfPlayer(obj.timeCounter, obj.player);
