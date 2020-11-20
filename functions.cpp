@@ -86,10 +86,12 @@ void display_information(objAll obj){
     lifestring += "O";                                        // when changing "O" to heart
     }
 
-
-
     mvaddstr(1, 1, timestring.c_str()); 
     mvaddstr(1, 12, lifestring.c_str());
+
+    // 아이템　정보출력
+    string Bombstring = "BOMB: Press 'n'";
+    mvaddstr(1, obj.max_x-Bombstring.size()-1, Bombstring.c_str());
 }
 
 void flow_map_bg(char**map, int max_y, int max_x){

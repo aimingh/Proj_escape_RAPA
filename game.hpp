@@ -36,6 +36,18 @@ struct obj_RAPA{
     }
 };
 
+//　아이템　structure 
+struct Item{
+    int Bomb_nY ;
+    int Bomb_nX ;
+    int exist_flag;
+    
+    static const int down_time = 3;
+    void appear_item(int Bomb_nY, int Bomb_nX){  // 아이템 출력
+        mvaddstr(Bomb_nY, Bomb_nX, "++++++++++++++++");
+    };
+};
+
 // 캐리어 >> 다른 스트럭쳐 또는 자주 사용되는 상수 등을 한번에 옮기기 위한 스트럭쳐
 // 맵을 제외한 대부분을 들고 이동한다.
 struct objAll{
@@ -44,6 +56,7 @@ struct objAll{
     int rapa_num;                       // 현재 출현중인 rapa의 숫자
     obj_RAPA rapa[max_rapa_num];
     int max_y, max_x, timeCounter=0, ch='y';
+    Item item;
 };
 
 void map_init(char **, int, int);      // init map parameter

@@ -50,11 +50,24 @@ void game_start(){
                 }
             }
 
+            // 아이템　사라짐　테스트
+            if(obj.timeCounter%20==0){
+                obj.item.exist_flag = 0;
+            }
+
             obj.timeCounter++;
             //생명 감소 테스트 코드
             if(obj.ch == 'm'){
                 if(obj.player.life>0){obj.player.life--;}}
+        
+                
+            // 아이템　사용시　적　제거　테스트　
+            if(obj.ch == 'n'){
+                obj.item.exist_flag =1;
+                obj.rapa[target_dice].exist_flag=0;
                 };
+            };
+
     }else{
         display_map(map, obj.max_y, obj.max_x);
         string temp = "Game End!";
@@ -91,6 +104,9 @@ objAll obj_init(objAll obj){
         obj.rapa[i].exist_flag = 0;
     }
     obj.player.life = 3;
+    obj.item.Bomb_nY = 10;
+    obj.item.Bomb_nX = 10;
+    obj.item.exist_flag = 0;
     return obj;
 }
 
@@ -98,16 +114,21 @@ objAll obj_init(objAll obj){
 // 플레이어나 적, 그리고 게임 관련 정보를 출력
 void display(char **map, objAll obj){
     display_map(map, obj.max_y, obj.max_x);
+    
     for(int i=0;i<obj.max_rapa_num;i++){
         if(obj.rapa[i].exist_flag==1){
             obj.rapa[i].appear(obj.rapa[i].y, obj.rapa[i].x);
         }
-    } 
+    }
     if(obj.player.down_flag==0){
         obj.player.appear1(obj.player.y,obj.player.x);
     }else{
         obj.player.appear2(obj.player.y,obj.player.x);
     }
+    // 아이톔　화면출력
+    if(obj.item.exist_flag == 1){
+        obj.item.appear_item(obj.item.Bomb_nY, obj.item.Bomb_nX);
+    } 
     display_information(obj);
 }
 
