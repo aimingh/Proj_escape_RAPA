@@ -53,11 +53,11 @@ void map_init(char **map, int max_y, int max_x){
 
 // 스트럭쳐로 짜여진 오브젝트나 플레이어 등을 초기화
 objAll obj_init(objAll obj){
-    obj.max_y = LINES; obj.max_x = COLS-70;
-    obj.player.x = 1; obj.player.y = LINES - 2; // player start location
+    obj.max_y = MAX_Y; obj.max_x = MAX_X;
+    obj.player.x = 1; obj.player.y = obj.max_y - 2; // player start location
     obj.player.jump_flag = 0;   //flag of jump
     obj.player.down_flag = 0;
-    obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = LINES - 2;    //rapa[0] start location
+    obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; obj.rapa[0].y = obj.max_y - 2;    //rapa[0] start location
     return obj;
 }
 
@@ -130,20 +130,22 @@ int gameMenu(){
     menu_map[14] = "                                                                                                               ";
     int ch = KEY_UP;
     int sel = 12;
+    int max_y = MAX_Y;
+    int max_x = MAX_X;
     while((ch != 10)){
         for(int i=0; i<15; i++){
             for (int j=0; j<110; j++){
-                mvaddch(LINES/2 -7 + i,COLS/2 -90 + j,menu_map[i][j]);
+                mvaddch(max_y/2 -7 + i,max_x/2 -55 + j,menu_map[i][j]);
             }
         }
-        for(int i=0; i<LINES; i++){
-            for (int j=0; j<COLS-70; j++){
-                if (i==0||i==LINES-1){
+        for(int i=0; i<max_y; i++){
+            for (int j=0; j<max_x; j++){
+                if (i==0||i==max_y-1){
                     mvaddch(i,j,'=');
                 }
             }
         }
-        mvaddstr(LINES/2-7 + sel,COLS/2 -90 + 70,">>");
+        mvaddstr(max_y/2-7 + sel,max_x/2 -55 + 70,">>");
         ch = getch();
 
         switch (ch){

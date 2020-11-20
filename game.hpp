@@ -1,5 +1,8 @@
 #include <curses.h>
 
+#define MAX_Y 20;
+#define MAX_X 128;
+
 // player에 대한 structure
 struct Player{
     int x, y, life; // current location and survival life
