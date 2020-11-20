@@ -51,10 +51,7 @@ void game_start(){
             }
 
             obj.timeCounter++;
-<<<<<<< HEAD
-=======
             //생명 감소 테스트 코드
->>>>>>> 7083b62168314da760667f43db45160fd5af4bd8
             if(obj.ch == 'm'){
                 if(obj.player.life>0){obj.player.life--;}}
                 };
