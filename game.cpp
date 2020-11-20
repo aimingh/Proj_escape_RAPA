@@ -45,7 +45,7 @@ void game_start(){
                 }
             }
             obj.timeCounter++;
-            
+
             //생명 감소 테스트 코드
             if(obj.ch == 'm'){
                 if(obj.player.life>0){obj.player.life--;}}
@@ -79,6 +79,7 @@ objAll obj_init(objAll obj){
     obj.player.x = 1; obj.player.y = obj.max_y - 2; // player start location
     obj.player.jump_flag = 0;   //flag of jump
     obj.player.down_flag = 0;
+    obj.player.collap_flag = 0;
     obj.rapa_num = 0;
     for(int i=0;i<obj.max_rapa_num;i++){
         obj.rapa[i].x = obj.max_x-obj.rapa[i].shape_size_x-1; 
@@ -110,6 +111,7 @@ void display(char **map, objAll obj){
 // 플레이어의 움직임이나 장애물 등의 오브젝트의 움직임 등을 통제한다.
 objAll move(objAll obj){
     obj.player = move2direction(obj.ch, obj.player);
+    obj = is_collap(obj); //출돌판정 위치
     for(int i=0;i<obj.max_rapa_num;i++){
         if(obj.rapa[i].exist_flag==1){
             obj.rapa[i] = moveObj(obj.timeCounter, obj.rapa[i]);
@@ -127,13 +129,20 @@ objAll move(objAll obj){
         obj.player = gravityOfPlayer(obj.timeCounter, obj.player);
     }
 
+    //다운플레그 off
     if(obj.player.down_flag==1){
         if(obj.timeCounter%5==5-1){
             obj.player.down_counter--;
         }
         if(obj.player.down_counter==0){obj.player.down_flag=0;}
     }
-
+    //충돌후무적off
+    if(obj.player.collap_flag==1){
+        if(obj.timeCounter%5==5-1){
+            obj.player.collap_counter--;
+        }
+        if(obj.player.collap_counter==0){obj.player.collap_flag=0;}
+    }
     return obj;
 }
 

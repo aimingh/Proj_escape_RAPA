@@ -6,6 +6,8 @@
 // player에 대한 structure
 struct Player{
     int x, y, life; // current location and survival life
+    int collap_flag, collap_counter; //출돌판정 플레그
+     static const int collap_time = 5;
     int jump_flag, floating_flag, jump_counter; // 점프 플래그, 체공 플레그, 점프카운터
     static const int jump_hight = 5, jump_time = 5; // 점프 높이, 점프시 최고점 체공 시간
     static const int shape_size_y = 3, shape_size_x = 11;
@@ -30,7 +32,7 @@ struct obj_RAPA{
     int exist_flag;
     static const int shape_size_y = 3, shape_size_x = 10;
     void appear(const int &move_y, const int &move_x){
-        mvaddstr(move_y-this->shape_size_y+1, move_x," -------- ");    // enemy python
+        mvaddstr(move_y-this->shape_size_y+1, move_x," ------- ");    // enemy python
         mvaddstr(move_y-this->shape_size_y+2, move_x,"| Python |");
         mvaddstr(move_y-this->shape_size_y+3, move_x," -------- ");
     }

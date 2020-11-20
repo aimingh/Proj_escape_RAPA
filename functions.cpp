@@ -3,15 +3,32 @@
 #include "common.hpp"
 using namespace std;
 
-// 충돌에 대한 판정 (미완성)
-// 아래 충돌은 문제 없음 위 충돌 및 윈도우 밖으로 안나가도록 출동 판정 업그레이드 필요
-// 볃에 대한 충돌만 인정되므로 적 오브젝트에 대한 충돌 판정 필요
+//화면에서 이동 가능한 범위 판정
 int is_move_ok(int y, int x){   
-    int compare_ch;
     int max_y = MAX_Y;
     int max_x = MAX_X;
-    compare_ch = mvinch(y,x); // 주어진 위치 문자 return
-    return !((compare_ch=='*' || y >max_y-2 || y<5 || x > max_x - 8 || x < 0));  // 문자 제한, 윈도우 제한
+    return !((y >max_y-2 || y<5 || x > max_x - 8 || x < 0));  // 문자 제한, 윈도우 제한
+}
+
+// 충돌에 대한 판정 (미완성)
+// 적 오브젝트에 대한 충돌 판정
+// 가정: a'>x'
+// ((a+a'-x)>0 and (a-x)<0) or ((a+a'-(x+x'))>0 and (a-(x+x'))<0)  //x축 조건
+// or
+// ((b+b'-y)>0 and (b-y)<0) or ((b+b'-(y+y'))>0 and (b-(y+y'))<0)  //y축 조건
+struct objAll is_collap(struct objAll obj){
+    int x1 = obj.player.x, x2 = obj.player.x+obj.player.shape_size_x;
+    int y1 = obj.player.y, y2 = obj.player.y-obj.player.shape_size_y;
+    for(int i=0; i<obj.max_rapa_num;i++){
+        if ((x1<obj.rapa[i].x&&obj.rapa[i].x<x2)||((x1<obj.rapa[i].x+obj.rapa[i].shape_size_x&&obj.rapa[i].x+obj.rapa[i].shape_size_x<x2))){
+            if ((y2<obj.rapa[i].y&&obj.rapa[i].y<y1)||(y2<obj.rapa[i].y-obj.rapa[i].shape_size_y&&obj.rapa[i].y-obj.rapa[i].shape_size_y<y1)){
+                // obj.player.life--; 
+                obj.player.collap_flag=1;
+                obj.player.collap_counter=obj.player.collap_time;
+            }
+        }
+    }
+    return obj;
 }
 
 // 플레이어 움직임

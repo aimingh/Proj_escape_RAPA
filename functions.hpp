@@ -1,5 +1,6 @@
 // 액션에 대한 함수
 int is_move_ok(int, int);               // check obstacle to direction of moving
+struct objAll is_collap(struct objAll);
 struct Player move2direction(int, struct Player);                    // move to direction
 struct Player gravityOfPlayer(int, struct Player);  // automatically down
 struct Player jumppingOfPlayer(int, struct Player);
