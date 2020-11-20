@@ -51,7 +51,10 @@ void game_start(){
             }
 
             obj.timeCounter++;
-        }
+            //생명 감소 테스트 코드
+            if(obj.ch == 'm'){
+                if(obj.player.life>0){obj.player.life--;}}
+                };
     }else{
         display_map(map, obj.max_y, obj.max_x);
         string temp = "Game End!";
@@ -59,7 +62,6 @@ void game_start(){
         timeout(-1);
         getch();
     }
-
 	endwin();
 }
 
@@ -88,6 +90,7 @@ objAll obj_init(objAll obj){
         obj.rapa[i].y = obj.max_y - 2;    //rapa[0] start location
         obj.rapa[i].exist_flag = 0;
     }
+    obj.player.life = 3;
     return obj;
 }
 
