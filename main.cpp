@@ -1,14 +1,6 @@
-#include <curses.h>
+#include "common.hpp"
 
-int main()
-{
-    WINDOW *w;
-	w = initscr();		
-    curs_set(0);    //invisible cursor
-    //************start main************
-	printw("Hello Ncurse !!!");	
-	getch();    //wait keyboard
-    //************end main************
-	endwin();
+int main(){
+    game_start();
 	return 0;
 }
