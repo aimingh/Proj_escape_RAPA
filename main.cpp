@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <curses.h>
-#include "Characters.hpp"
+#include "Common.hpp"
 using namespace std;
 
 #define E_TRACE ' '
@@ -12,21 +12,18 @@ int main(void){
     WINDOW *w;
     w = initscr();
     curs_set(0);
-
     keypad(stdscr, TRUE); timeout(30); //control game speed
     int y = LINES-1, x = COLS-COLS, move_x = 0, move_y = 0; //start main
-    int ch = 'y'; //define integer for compare with define, 정수 선언?
+    int ch = 'y'; //keyboard init, can define any key without using key(in this case:q and Q)
 
-    hero::tayo hero;
-
-	enemy::python py;
-	enemy::css css;
-	enemy::cpp cpp;
-	enemy::html html;
+    struct tayo tayo;
+    struct python py;
+    struct css css;
+    struct cpp cpp;
+    struct html html;
 
     while((ch!='q') && (ch !='Q')){
-        hero.appear(y-2,x);
-
+        tayo.appear(y-2,x);
 		py.appear(20,50);
 		css.appear(30,40);
 		cpp.appear(10,20);
