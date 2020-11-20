@@ -74,7 +74,7 @@ void display_map(char **map, int max_y, int max_x){
 // 게임 정보 출력
 void display_information(objAll obj){
     string timestring = "TIME: " + to_string(obj.timeCounter);  //show time
-    string lifestring = "LIFE: ";
+    string lifestring = "/  LIFE: ";
     int i = 0;
     for(i =0; i<obj.player.life; i++){
     lifestring += "O";
