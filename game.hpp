@@ -44,7 +44,7 @@ struct Item{
     
     static const int down_time = 3;
     void appear_item(int Bomb_nY, int Bomb_nX){  // 아이템 출력
-        mvaddstr(Bomb_nY, Bomb_nX, "++++++++++++++++");
+        mvaddstr(Bomb_nY, Bomb_nX, "+++++++++   B   O   M   B   ++++++++++");
     };
 };
 

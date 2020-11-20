@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
-#include <curses.h>
+#include <ncursesw/curses.h>
+#include <locale.h>
 #include "common.hpp"
 using namespace std;
 
@@ -51,7 +52,7 @@ void game_start(){
             }
 
             // 아이템　사라짐　테스트
-            if(obj.timeCounter%20==0){
+            if(obj.timeCounter%40==0){
                 obj.item.exist_flag = 0;
             }
 
@@ -62,9 +63,16 @@ void game_start(){
         
                 
             // 아이템　사용시　적　제거　테스트　
-            if(obj.ch == 'n'){
+            if(obj.ch == 'b'){
                 obj.item.exist_flag =1;
-                obj.rapa[target_dice].exist_flag=0;
+
+                int i = 0;
+                for(i=0; i<10; i++){
+                if(obj.rapa[i].exist_flag==1){
+                    obj.rapa[i].exist_flag=0;
+                }
+                }
+                
                 };
             };
 
@@ -104,10 +112,16 @@ objAll obj_init(objAll obj){
         obj.rapa[i].exist_flag = 0;
     }
     obj.player.life = 3;
-    obj.item.Bomb_nY = 10;
-    obj.item.Bomb_nX = 10;
+
+    // 아이템　위치　초기화　
+    obj.item.Bomb_nY = obj.max_y/2; 
+    obj.item.Bomb_nX = 50;
+    
     obj.item.exist_flag = 0;
     return obj;
+
+    string Bombstring = "BOMB: Press 'b'";
+
 }
 
 // 화면을 출력
