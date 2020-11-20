@@ -11,10 +11,11 @@ void game_start(){
     timeout(30);
 	keypad(stdscr, TRUE);
 
+    //랜덤요소
     random_device rd;
     mt19937_64 mersenne_twister_engine(rd());
-    uniform_int_distribution<> dice(1,60);
-    uniform_int_distribution<> dice2(1,4);
+    uniform_int_distribution<> dice(0,5);
+    uniform_int_distribution<> dice2(0,2);
     int random_dice;
 
 	objAll obj; //declare obj carrier
@@ -28,10 +29,44 @@ void game_start(){
     int sel = gameMenu();
     if(sel==12){
         while((obj.ch != 'q') && (obj.ch != 'Q')){
-            display(map, obj);
-            obj.ch = getch();
-            obj = move(obj);
-            flow_map_bg(map, obj.max_y, obj.max_x);
+            display(map, obj);  //출력
+            obj.ch = getch();   //키보드 입력
+            obj = move(obj);    //이동
+            flow_map_bg(map, obj.max_y, obj.max_x); //배경움직임
+            
+            // 적 생성 임시
+            if(obj.timeCounter%10==0){  //판정 속도 제어
+                random_dice = dice(mersenne_twister_engine);    //
+                if(random_dice==0){
+                    switch (dice2(mersenne_twister_engine))
+                    {
+                    case 0:
+                        if (obj.rapa[0].exist_flag==0){
+                            obj.rapa[0].exist_flag=1;
+                            obj.rapa[0].x = obj.max_x-obj.rapa[0].shape_size_x-1; 
+                            obj.rapa[0].y = obj.max_y - 2;
+                        }
+                        break;
+                    case 1:
+                        if (obj.rapa[1].exist_flag==0){
+                            obj.rapa[1].exist_flag=1;
+                            obj.rapa[1].x = obj.max_x-obj.rapa[1].shape_size_x-1; 
+                            obj.rapa[1].y = obj.max_y - 6;
+                        }
+                        break;
+                    case 2:
+                        if (obj.rapa[2].exist_flag==0){
+                            obj.rapa[2].exist_flag=1;
+                            obj.rapa[2].x = obj.max_x-obj.rapa[2].shape_size_x-1; 
+                            obj.rapa[2].y = obj.max_y - 10;
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+
             obj.timeCounter++;
         }
     }else{
@@ -79,7 +114,6 @@ void display(char **map, objAll obj){
     display_map(map, obj.max_y, obj.max_x);
     for(int i=0;i<obj.max_rapa_num;i++){
         if(obj.rapa[i].exist_flag==1){
-            // obj.rapa[i] = moveObj(obj.timeCounter, obj.rapa[i]);
             obj.rapa[i].appear(obj.rapa[i].y, obj.rapa[i].x);
         }
     } 
@@ -95,9 +129,6 @@ void display(char **map, objAll obj){
 // 플레이어의 움직임이나 장애물 등의 오브젝트의 움직임 등을 통제한다.
 objAll move(objAll obj){
     obj.player = move2direction(obj.ch, obj.player);
-    // if(obj.timeCounter>10){
-    //     obj.rapa[0] = moveObj(obj.timeCounter, obj.rapa[0]);
-    // }
     for(int i=0;i<obj.max_rapa_num;i++){
         if(obj.rapa[i].exist_flag==1){
             obj.rapa[i] = moveObj(obj.timeCounter, obj.rapa[i]);

@@ -61,6 +61,9 @@ struct obj_RAPA moveObj(int counter, struct obj_RAPA rapa){
     if(counter%maxtime==maxtime-1){
         rapa.x = rapa.x - 1;
     }
+    if(rapa.x<0){       // 맵 끝에 가면 exsist_flag off object 소멸
+        rapa.exist_flag = 0;
+    }
     return rapa;
 }
 
