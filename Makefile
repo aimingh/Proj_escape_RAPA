@@ -5,7 +5,7 @@ CC = c++
 CFLAGS = -c -g -W -Wall -Wno-write-strings
 LD = c++
 LDFLAGS = -o $(TARGET)
-LIBS = -lcurses
+LIBS = -lncursesw
 
 all : $(OBJS)
 	$(LD) $(LDFLAGS) $(OBJS) $(LIBS)

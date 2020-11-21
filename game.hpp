@@ -10,18 +10,18 @@ struct Player{
      static const int collap_time = 5;
     int jump_flag, floating_flag, jump_counter; // 점프 플래그, 체공 플레그, 점프카운터
     static const int jump_hight = 5, jump_time = 5; // 점프 높이, 점프시 최고점 체공 시간
-    static const int shape_size_y = 3, shape_size_x = 11;
-    
+    static const int shape_size_y = 3, shape_size_x = 15;
+
     void appear1(const int &move_y, const int &move_x){  // 플레이어 출력
         mvaddstr(move_y-this->shape_size_y+1, move_x," --------- ");    //Tayo bus
-        mvaddstr(move_y-this->shape_size_y+2, move_x,"|      |OO|");
+        mvaddstr(move_y-this->shape_size_y+2, move_x,"|     |O O|");
         mvaddstr(move_y-this->shape_size_y+3, move_x," -@---@--- ");
     }
     int down_flag, down_counter;
     static const int down_time = 3;
     void appear2(const int &move_y, const int &move_x){  // 플레이어 출력
-        mvaddstr(move_y-this->shape_size_y+2, move_x,"/``````/==/");
-        mvaddstr(move_y-this->shape_size_y+3, move_x," -@---@--- ");
+        mvaddstr(move_y-this->shape_size_y+2, move_x,"/````````/> </");
+        mvaddstr(move_y-this->shape_size_y+3, move_x,"---@---@----- ");
     }
 };
 
@@ -38,6 +38,18 @@ struct obj_RAPA{
     }
 };
 
+//　아이템　structure 
+struct Item{
+    int Bomb_nY ;
+    int Bomb_nX ;
+    int exist_flag;
+    
+    static const int down_time = 3;
+    void appear_item(int Bomb_nY, int Bomb_nX){  // 아이템 출력
+        mvaddstr(Bomb_nY, Bomb_nX, "+++++++++   B   O   M   B   ++++++++++");
+    };
+};
+
 // 캐리어 >> 다른 스트럭쳐 또는 자주 사용되는 상수 등을 한번에 옮기기 위한 스트럭쳐
 // 맵을 제외한 대부분을 들고 이동한다.
 struct objAll{
@@ -46,6 +58,7 @@ struct objAll{
     int rapa_num;                       // 현재 출현중인 rapa의 숫자
     obj_RAPA rapa[max_rapa_num];
     int max_y, max_x, timeCounter=0, ch='y';
+    Item item;
 };
 
 void map_init(char **, int, int);      // init map parameter

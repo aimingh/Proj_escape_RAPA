@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
-#include <curses.h>
+#include <ncursesw/curses.h>
+#include <locale.h>
 #include "common.hpp"
 using namespace std;
 
@@ -38,7 +39,7 @@ void game_start(){
                 obj = move(obj);    //이동
                 flow_map_bg(map, obj.max_y, obj.max_x); //배경움직임
                 
-                // 적 생성 임시
+                // 적 생성
                 if(obj.timeCounter%10==0){  //판정 속도 제어
                     random_dice = dice(mersenne_twister_engine);    //
                     if(random_dice==0){
@@ -48,6 +49,17 @@ void game_start(){
                     }
                 }
                 obj.timeCounter++;
+                if(obj.timeCounter%40==0){obj.item.exist_flag = 0;} // 아이템　사라짐　테스트
+                if(obj.ch == 'm'&&obj.player.life>0){obj.player.life--;} //생명 감소 테스트 코드
+                if(obj.ch == 'b'){  // 아이템　사용시　적　제거　테스트　
+                    obj.item.exist_flag =1;
+                    int i = 0;
+                    for(i=0; i<10; i++){
+                        if(obj.rapa[i].exist_flag==1){
+                            obj.rapa[i].exist_flag=0;
+                        }
+                    }
+                };
             };
         }else{
             display_map(map, obj.max_y, obj.max_x);
@@ -90,23 +102,37 @@ objAll obj_init(objAll obj){
         obj.rapa[i].exist_flag = 0;
     }
     obj.player.life = 3;
+
+    // 아이템　위치　초기화　
+    obj.item.Bomb_nY = obj.max_y/2; 
+    obj.item.Bomb_nX = 50;
+    
+    obj.item.exist_flag = 0;
     return obj;
+
+    string Bombstring = "BOMB: Press 'b'";
+
 }
 
 // 화면을 출력
 // 플레이어나 적, 그리고 게임 관련 정보를 출력
 void display(char **map, objAll obj){
     display_map(map, obj.max_y, obj.max_x);
+    
     for(int i=0;i<obj.max_rapa_num;i++){
         if(obj.rapa[i].exist_flag==1){
             obj.rapa[i].appear(obj.rapa[i].y, obj.rapa[i].x);
         }
-    } 
+    }
     if(obj.player.down_flag==0){
         obj.player.appear1(obj.player.y,obj.player.x);
     }else{
         obj.player.appear2(obj.player.y,obj.player.x);
     }
+    // 아이톔　화면출력
+    if(obj.item.exist_flag == 1){
+        obj.item.appear_item(obj.item.Bomb_nY, obj.item.Bomb_nX);
+    } 
     display_information(obj);
 }
 
