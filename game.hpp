@@ -55,3 +55,4 @@ void display(char **, objAll ); // display for game, ex) information, object, pl
 objAll move(objAll obj);  // moving about player or object
 
 int gameMenu();
+void gameOver();

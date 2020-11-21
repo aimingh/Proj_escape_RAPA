@@ -26,12 +26,13 @@ void game_start(){
     uniform_int_distribution<> dice2(0,obj.max_rapa_num-1);
     uniform_int_distribution<> dice3(0,10);
     int random_dice, target_dice, target_height;
+    int sel;
     while(1){
         obj = obj_init(obj);
         map_init(map, obj.max_y, obj.max_x);
-        int sel = gameMenu();
-        if(sel==12){
-            while((obj.ch != 'q') && (obj.ch != 'Q') && (obj.player.life!=0)){
+        sel = gameMenu();
+        if(sel==0){
+            while((obj.ch != 'q') && (obj.ch != 'Q') && (obj.player.life>0)){
                 display(map, obj);  //출력
                 obj.ch = getch();   //키보드 입력
                 obj = move(obj);    //이동
@@ -56,6 +57,7 @@ void game_start(){
             getch();
             break;
         }
+        gameOver();
     }
 	endwin();
 }
@@ -149,6 +151,7 @@ objAll move(objAll obj){
 
 // 게임 시작 화면 출력 및 start game, Exit 선택
 int gameMenu(){
+    erase();
     char **menu_map = new char*[15];
     for (int i=0; i<15; i++){
         menu_map[i] = new char[110];
@@ -196,38 +199,34 @@ int gameMenu(){
                 sel = 13; break;
         }
     }
-    return sel;
+    return sel-12;
 }
-/*
-int gameOver(){
-    char **menu_map = new char*[15];
-    for (int i=0; i<15; i++){
-        menu_map[i] = new char[110];
+
+void gameOver(){
+    erase();
+    char **menu_map = new char*[11];
+    for (int i=0; i<11; i++){
+        menu_map[i] = new char[86];
     }
     // 시작 화면 구성
-    menu_map[0]  = "                    ______________________________                                                             ";
-    menu_map[1]  = "__________________|                  RAPA        |     ____                                                        ";
-    menu_map[2]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|     ____                                                      ";
-    menu_map[3]  = "XXXXXXXXXXXXXXXXXX|          |XXXXXXXXXXXXXXXXXXX|                                                             ";
-    menu_map[4]  = "XXXXXXXXXXXXXXXXXX|          |                   |         /                                                    ";
-    menu_map[5]  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                                                             ";
-    menu_map[6]  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                                                             ";
-    menu_map[7]  = "-------------------------------------------------|                                                             ";
-    menu_map[8]  = "     |          |                      |         |                                                             ";
-    menu_map[9]  = "            |                      |             |                                                             ";
-    menu_map[10] = "            |                      |             |                                                             ";
-    menu_map[11] = "                                ......------|    |                                                             ";
-    menu_map[12] = "              ......------``````            |    |                       Game Start                            ";
-    menu_map[13] = "..------``````                              |    |                          Exit                               ";
-    menu_map[14] = "                                                                                                               ";
+    menu_map[0]  = "                                                                                     ";
+    menu_map[1]  = "   ______________       ____  ______________   _______ __      ____________ ______   ";
+    menu_map[2]  = "  /  _______/    \\     /    \\/    /  ______/  /  ___  \\  \\    /  /  ______/  ___  \\  ";
+    menu_map[3]  = " /  /   ___/  /\\  \\   /  /\\___/  /  ___/     /  /  /  /\\  \\  /  /  ___/  /  /__/  /  ";
+    menu_map[4]  = "/  /___/  /  ____  \\ /  /    /  /  /_____   /  /__/  /  \\  \\/  /  /_____/  /__  _/   ";
+    menu_map[5]  = "\\________/__/    \\__/__/    /__/________/   \\_______/    \\____/________/__/   \\__\\   ";
+    menu_map[6] = "                                                                                     ";
+    menu_map[7] = "                                                                                     ";
+    menu_map[8] = "                                                                                     ";
+    menu_map[9] = "                                        Continue                                           ";
+    menu_map[10] = "                                                                                     ";
     int ch = KEY_UP;
-    int sel = 12;
     int max_y = MAX_Y;
     int max_x = MAX_X;
     while((ch != 10)){
-        for(int i=0; i<15; i++){
-            for (int j=0; j<110; j++){
-                mvaddch(max_y/2 -7 + i,max_x/2 -55 + j,menu_map[i][j]);
+        for(int i=0; i<11; i++){
+            for (int j=0; j<85; j++){
+                mvaddch(max_y/2 -6 + i,max_x/2 -43 + j,menu_map[i][j]);
             }
         }
         for(int i=0; i<max_y; i++){
@@ -237,16 +236,6 @@ int gameOver(){
                 }
             }
         }
-        mvaddstr(max_y/2-7 + sel,max_x/2 -55 + 70,">>");
         ch = getch();
-
-        switch (ch){
-            case KEY_UP:
-                sel = 12; break;
-            case KEY_DOWN:
-                sel = 13; break;
-        }
     }
-    return sel;
 }
-*/
