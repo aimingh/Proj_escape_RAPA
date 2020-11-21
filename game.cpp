@@ -71,9 +71,15 @@ void map_init(char **map, int max_y, int max_x){
     for(int i=0; i<max_y; i++){
         for (int j=0; j<max_x; j++){
             map[i][j] = ' ';
-            if(i==0 || i==max_y-1 || i==2){
+            if(i==1 || i==max_y-2 || i==3){
                 if(j%3==0){map[i][j] = '*';}
                 else{map[i][j] = '-';}
+            }
+             // 176 - "RTC control/7.13-8.28*Big data analysis/8.31-9.4*Comprehensive flight/10.27-11.9*Custom drone production/11.10-12.3*Autonomous flight using AI/12.4-1.26*Final Project/1.11-1.27";
+            char temp[177] = "RTC control/7.13-8.28*Big data analysis/8.31-9.4*Comprehensive flight/10.27-11.9*Custom drone production/11.10-12.3*Autonomous flight using AI/12.4-1.26*Final Project/1.11-1.27";
+            for(int i=0; i<max_x; i++){
+                map[0][i]=char(temp[i]);
+                map[max_y-1][i]=char(temp[i]);
             }
         }
     }
@@ -83,13 +89,13 @@ void map_init(char **map, int max_y, int max_x){
 objAll obj_init(objAll obj){
     obj.ch='y';
     obj.max_y = MAX_Y; obj.max_x = MAX_X;
-    obj.player.x = 1; obj.player.y = obj.max_y - 2; // player start location
+    obj.player.x = 1; obj.player.y = obj.max_y - 3; // player start location
     obj.player.jump_flag = 0;   //flag of jump
     obj.player.down_flag = 0;
     obj.player.collap_flag = 0;
     obj.rapa_num = 0;
     for(int i=0;i<obj.max_rapa_num;i++){
-        obj.rapa[i].x = obj.max_x-obj.rapa[i].shape_size_x-1; 
+        obj.rapa[i].x = obj.max_x-obj.rapa[i].shape_size_x-3; 
         obj.rapa[i].y = obj.max_y - 2;    //rapa[0] start location
         obj.rapa[i].exist_flag = 0;
     }

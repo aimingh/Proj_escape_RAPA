@@ -8,7 +8,7 @@ using namespace std;
 int is_move_ok(int y, int x){   
     int max_y = MAX_Y;
     int max_x = MAX_X;
-    return !((y >max_y-2 || y<5 || x > max_x - 8 || x < 0));  // 문자 제한, 윈도우 제한
+    return !((y >max_y-3 || y<6 || x > max_x - 8 || x < 0));  // 문자 제한, 윈도우 제한
 }
 
 // 충돌에 대한 판정 (미완성)
@@ -97,7 +97,7 @@ struct objAll genRAPA(struct objAll obj, int target_dice, int target_height){
     if (obj.rapa[target_dice].exist_flag==0){
         obj.rapa[target_dice].exist_flag=1;
         obj.rapa[target_dice].x = obj.max_x-obj.rapa[target_dice].shape_size_x-1; 
-        obj.rapa[target_dice].y = obj.max_y - target_height - 2;
+        obj.rapa[target_dice].y = obj.max_y - target_height - 3;
     }
     return obj;
 }
@@ -121,25 +121,31 @@ void display_information(objAll obj){
     lifestring += "❤";                                        // when changing "O" to heart
     }
 
-    mvaddstr(1, 1, timestring.c_str()); 
-    mvaddstr(1, 12, lifestring.c_str());
+    mvaddstr(2, 1, timestring.c_str()); 
+    mvaddstr(2, 12, lifestring.c_str());
 
     // 아이템　정보출력
     string Bombstring = "BOMB: Press 'b'";
-    mvaddstr(1, obj.max_x-Bombstring.size()-1, Bombstring.c_str());
+    mvaddstr(2, obj.max_x-Bombstring.size()-1, Bombstring.c_str());
 }
 
 void flow_map_bg(char**map, int max_y, int max_x){
+    char temp=map[0][0];
     for (int j=0; j<max_x-1; j++){
-        map[2][j] = map[2][j+1];
+        map[0][j] = map[0][j+1];
+        map[3][j] = map[3][j+1];
+        map[max_y-2][j] = map[max_y-2][j+1];
         map[max_y-1][j] = map[max_y-1][j+1];
     }
-    if(map[2][max_x-2]=='-' && map[2][max_x-3]=='-'){
-        map[2][max_x-1] = '*';
-        map[max_y-1][max_x-1] = '*';
+    map[0][max_x-1] = temp;
+    map[max_y-1][max_x-1] = temp;
+
+    if(map[3][max_x-2]=='-' && map[3][max_x-3]=='-'){
+        map[3][max_x-1] = '*';
+        map[max_y-2][max_x-1] = '*';
     }else{
-        map[2][max_x-1] = '-';
-        map[max_y-1][max_x-1] = '-';
+        map[3][max_x-1] = '-';
+        map[max_y-2][max_x-1] = '-';
     }
 }
 
