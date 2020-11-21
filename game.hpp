@@ -42,7 +42,7 @@ struct obj_RAPA{
 struct Item{
     int Bomb_nY ;
     int Bomb_nX ;
-    int exist_flag;
+    int exist_flag; //사용 불가능 플래그?
     
     static const int down_time = 3;
     void appear_item(int Bomb_nY, int Bomb_nX){  // 아이템 출력

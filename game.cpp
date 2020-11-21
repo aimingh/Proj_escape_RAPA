@@ -23,9 +23,9 @@ void game_start(){
     //랜덤요소
     random_device rd;
     mt19937_64 mersenne_twister_engine(rd());
-    uniform_int_distribution<> dice(0,5);
-    uniform_int_distribution<> dice2(0,obj.max_rapa_num-1);
-    uniform_int_distribution<> dice3(0,10);
+    uniform_int_distribution<> dice(0,5);   // 적 출현 확률
+    uniform_int_distribution<> dice2(0,obj.max_rapa_num-1); // 어떤 적을 출현시킬지
+    uniform_int_distribution<> dice3(0,10); // 어떤 높이에서 출현시킬지
     int random_dice, target_dice, target_height;
     int sel;
     while(1){
@@ -48,18 +48,10 @@ void game_start(){
                         obj = genRAPA(obj, target_dice, target_height);
                     }
                 }
+                if(obj.ch == 'b'){obj = bomb(obj);}  // 아이템　사용시　적　제거　테스트　
                 obj.timeCounter++;
-                if(obj.timeCounter%40==0){obj.item.exist_flag = 0;} // 아이템　사라짐　테스트
                 if(obj.ch == 'm'&&obj.player.life>0){obj.player.life--;} //생명 감소 테스트 코드
-                if(obj.ch == 'b'){  // 아이템　사용시　적　제거　테스트　
-                    obj.item.exist_flag =1;
-                    int i = 0;
-                    for(i=0; i<10; i++){
-                        if(obj.rapa[i].exist_flag==1){
-                            obj.rapa[i].exist_flag=0;
-                        }
-                    }
-                };
+                if(obj.timeCounter%40==0){obj.item.exist_flag = 0;} // 아이템　사라짐　테스트 (일정 시간 후 아이템 재사용 가능?)
             };
         }else{
             display_map(map, obj.max_y, obj.max_x);
@@ -69,7 +61,7 @@ void game_start(){
             getch();
             break;
         }
-        gameOver();
+        gameOver(); //게임오버 화면
     }
 	endwin();
 }

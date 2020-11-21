@@ -142,3 +142,14 @@ void flow_map_bg(char**map, int max_y, int max_x){
         map[max_y-1][max_x-1] = '-';
     }
 }
+
+struct objAll bomb(struct objAll obj){
+    obj.item.exist_flag =1;
+    int i = 0;
+    for(i=0; i<10; i++){
+        if(obj.rapa[i].exist_flag==1){
+            obj.rapa[i].exist_flag=0;
+        }
+    }
+    return obj;
+}
