@@ -84,7 +84,7 @@ void display_information(objAll obj){
 
     int i = 0;
     for(i =0; i<obj.player.life; i++){
-    lifestring += "❤";                                        // when changing "O" to heart
+    lifestring += "♥ ";                                        // when changing "O" to heart
     }
 
     mvaddstr(1, 1, timestring.c_str()); 
