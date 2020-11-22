@@ -1,7 +1,7 @@
 sample/*
 .vscode/*
-main
-*.o
+# main
+# *.o
 tmp.txt
 ES_oh/*
 Jh_cho/*
